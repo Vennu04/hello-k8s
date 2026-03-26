@@ -4,4 +4,4 @@ metadata:
   name: hello-k8s-config
   namespace: hello-k8s
 data:
-  app_version: "v1.0.0"
+  app_version: "v2.0.0"
