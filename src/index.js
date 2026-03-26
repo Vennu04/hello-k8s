@@ -5,7 +5,7 @@ const VERSION = process.env.APP_VERSION || 'v1.0.0';
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'Hello from Kubernetes!',
+    message: 'Hello from Kubernetes v2!',
     version: VERSION,
     pod: process.env.HOSTNAME,
     timestamp: new Date().toISOString()
