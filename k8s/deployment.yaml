@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-k8s
+  namespace: hello-k8s
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-k8s
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: hello-k8s
+    spec:
+      containers:
+        - name: hello-k8s
+          image: 558948636184.dkr.ecr.us-east-1.amazonaws.com/hello-k8s:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: hello-k8s-config
+                  key: app_version
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-k8s-config
+  namespace: hello-k8s
+data:
+  app_version: "v1.0.0"
